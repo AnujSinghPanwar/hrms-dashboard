@@ -264,7 +264,12 @@ export default function Main({ children }) {
                 cursor: "pointer",
               }}
             />
-            <h5 onClick={handleLogout}>Logout</h5>
+            <h5
+              style={{ cursor: "pointer" }}
+              onClick={handleLogout}
+            >
+              Logout
+            </h5>
           </div>
         </Header>
       )}
