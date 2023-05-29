@@ -1,3 +1,4 @@
+"use client";
 import "./globals.css";
 import store from "./Store";
 import Main from "./home/MainContainer";
