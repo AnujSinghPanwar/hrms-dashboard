@@ -4,6 +4,11 @@ import "./globals.css";
 import store from "./Store";
 import Main from "./home/MainContainer";
 
+export const metadata = {
+  title: "Next",
+  description: "G",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
