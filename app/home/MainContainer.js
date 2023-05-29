@@ -128,6 +128,11 @@ export default function Main({ children }) {
           key: "empstatus",
           onClick: () => router.push("/Dashboard/status"),
         },
+        {
+          label: "Employee View",
+          key: "empview",
+          onClick: () => router.push("/employee/view"),
+        },
       ],
     },
     // {

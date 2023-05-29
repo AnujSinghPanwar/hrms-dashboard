@@ -118,9 +118,14 @@ export default function page() {
                 padding: "10px",
                 marginTop: "20px",
                 marginBottom: "15px",
+                justifyContent: "space-between",
+                display: "flex",
               }}
             >
               <span>Single Employee</span>
+              <span className={styles.lin}>
+                View Employee
+              </span>
             </Col>
             <Col span={4}>
               <span>Fisrt Name</span>
@@ -149,7 +154,7 @@ export default function page() {
             </Col>
             <Col span={4}>
               <MySelect
-                label="Contact Type"
+                label="Payroll"
                 options={optValue}
               />
             </Col>
@@ -161,10 +166,10 @@ export default function page() {
             </Col>
 
             <Col span={4} style={{ marginTop: "10px" }}>
-              <span>Addhar No</span>
+              <span>Aadhar No</span>
               <Input
                 style={{ width: "100%" }}
-                placeholder="Addhar no"
+                placeholder="32145698745"
               />
             </Col>
             <Col span={24} style={{ marginTop: "20px" }}>
