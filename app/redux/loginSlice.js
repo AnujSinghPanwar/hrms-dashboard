@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 
 const initialState = {
-  token: localStorage.getItem("token") ?? "",
+  token: `typeof window !== "undefined" && (localStorage.getItem("token") ?? null)`,
   msg: "",
   err: "",
   loading: false,
@@ -32,15 +32,21 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     addToken: (state, action) => {
-      state.token = localStorage.getItem("token");
+      if (typeof window !== "undefined") {
+        state.token = localStorage.getItem("token");
+      }
     },
     addUserId: (state, action) => {
-      state.token = localStorage.getItem("user_id");
+      if (typeof window !== "undefined") {
+        state.token = localStorage.getItem("user_id");
+      }
     },
     logoutUser: (state, action) => {
       state.token = null;
       // localStorage.removeItem("token");
-      localStorage.clear();
+      if (typeof window !== "undefined") {
+        localStorage.clear();
+      }
     },
   },
   extraReducers: {
@@ -56,8 +62,10 @@ const loginSlice = createSlice({
         state.user_id = data.crn_id;
         state.token = data.token;
 
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user_id", data.crn_id);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user_id", data.crn_id);
+        }
         // localStorage.setItem("msg", message);
         state.loading = false;
       } else if (code == 500) {

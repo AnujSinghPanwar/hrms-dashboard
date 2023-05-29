@@ -213,11 +213,14 @@ export default function Main({ children }) {
   };
 
   useEffect(() => {
-    if (token) {
-      router.push("/");
-      toast.success(msg);
-    } else {
-      router.push("/login");
+    if (typeof window !== "undefined") {
+      console.log("first");
+      if (token) {
+        router.push("/");
+        toast.success(msg);
+      } else {
+        router.push("/login");
+      }
     }
   }, [token]);
   return (
