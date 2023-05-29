@@ -4,10 +4,10 @@ import store from "./Store";
 import Main from "./home/MainContainer";
 import { Provider } from "react-redux";
 
-export const metadata = {
-  title: "Next",
-  description: "G",
-};
+// export const metadata = {
+//   title: "Next",
+//   description: "G",
+// };
 
 export default function RootLayout({ children }) {
   return (
