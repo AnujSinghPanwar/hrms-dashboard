@@ -60,20 +60,20 @@ export default function Main({ children }) {
       children: [
         {
           label: "Create Payroll",
-          key: "contractors",
-          onClick: () =>
-            router.push("/Dashboard/contractor"),
+          key: "payroll",
+          onClick: () => router.push("/dashboard/payroll"),
         },
         {
-          label: "Statuary",
-          key: "statuary",
+          label: "Statutory",
+          key: "statutory",
           // icon: (
           //   <UsergroupAddOutlined
           //     style={{ fontSize: "20px" }}
           //     className="icn"
           //   />
           // ),
-          onClick: () => router.push("/Dashboard/statuary"),
+          onClick: () =>
+            router.push("/dashboard/statutory"),
         },
       ],
     },
