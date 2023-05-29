@@ -4,9 +4,9 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const value = typeof window !== "undefined";
 const initialState = {
-  token: `typeof window !== "undefined" && (localStorage.getItem("token") ?? null)`,
+  token: value ? localStorage.getItem("token") ?? null : "",
   msg: "",
   err: "",
   loading: false,
