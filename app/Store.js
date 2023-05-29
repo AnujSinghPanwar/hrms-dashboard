@@ -1,4 +1,3 @@
-"use client";
 const { configureStore } = require("@reduxjs/toolkit");
 import loginSlice from "./redux/loginSlice";
 
