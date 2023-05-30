@@ -66,12 +66,7 @@ export default function Main({ children }) {
         {
           label: "Statutory",
           key: "statutory",
-          // icon: (
-          //   <UsergroupAddOutlined
-          //     style={{ fontSize: "20px" }}
-          //     className="icn"
-          //   />
-          // ),
+
           onClick: () =>
             router.push("/dashboard/statutory"),
         },
@@ -104,51 +99,43 @@ export default function Main({ children }) {
         {
           label: "Employees",
           key: "employees",
+          disabled: true,
           onClick: () =>
             router.push("/Dashboard/employees"),
         },
         {
           label: "Separate",
           key: "separate",
+          disabled: true,
           onClick: () => router.push("/Dashboard/separate"),
         },
         {
           label: "Add",
           key: "add",
+          disabled: true,
           onClick: () => router.push("/Dashboard/add"),
         },
         {
           label: "Edit",
           key: "edit",
+          disabled: true,
           onClick: () =>
             router.push("/Dashboard/view_employee"),
         },
         {
           label: "Employee Status",
           key: "empstatus",
+          disabled: true,
           onClick: () => router.push("/Dashboard/status"),
         },
         {
           label: "Employee View",
           key: "empview",
+          disabled: true,
           onClick: () => router.push("/employee/view"),
         },
       ],
     },
-    // {
-    //   label: "Edit Employee",
-    //   key: "view-employee",
-    //   icon: (
-    //     <UserAddOutlined
-    //       style={{ fontSize: "20px" }}
-    //       className="icn"
-    //     />
-    //   ),
-    //   onClick: () =>
-    //     router.push(
-    //       "/Dashboard/view_employee"
-    //     ),
-    // },
     {
       label: "Group & Header",
       key: "group-header",
@@ -160,18 +147,6 @@ export default function Main({ children }) {
       ),
       onClick: () => router.push("/header/group"),
     },
-    // {
-    //   label: "Payroll",
-    //   key: "payroll",
-    //   icon: (
-    //     <PayCircleOutlined
-    //       style={{ fontSize: "20px" }}
-    //       className="icn"
-    //     />
-    //   ),
-    //   onClick: () =>
-    //     router.push("/Dashboard/payroll"),
-    // },
     {
       label: "Assets",
       key: "assets",
@@ -201,11 +176,12 @@ export default function Main({ children }) {
         {
           label: "Pay Slip",
           key: "payslip",
-          onClick: () => router.push("/Dashboard/payslip"),
+          onClick: () => router.push("/slip/payslip"),
         },
         {
           label: "EPF/ESCI",
           key: "epf",
+          disabled: true,
           onClick: () => router.push("/Dashboard/epf"),
         },
       ],
@@ -232,7 +208,10 @@ export default function Main({ children }) {
       {token && (
         <Header
           className="header"
-          style={{ backgroundColor: "#fff" }}
+          style={{
+            backgroundColor: "#fff",
+            height: "50px",
+          }}
         >
           <div className="headerMainDiv">
             <div

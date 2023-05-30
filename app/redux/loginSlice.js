@@ -4,6 +4,10 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+
+// const link = "https://api.mscorpres.net:3001/hrmslogin/hrSignin"
+const link = "http://localhost:3001/hrmslogin/hrSignin";
+
 const value = typeof window !== "undefined";
 const initialState = {
   token: value ? localStorage.getItem("token") ?? null : "",
@@ -16,14 +20,13 @@ const initialState = {
 export const signInUser = createAsyncThunk(
   "signInUser",
   async ({ username, password }) => {
-    const { data } = await axios.post(
-      "https://api.mscorpres.net:3001/hrmslogin/hrSignin",
-      // "http://localhost:3001/hrmslogin/hrSignin",
-      {
-        username: username,
-        password: password,
-      }
-    );
+    const { data } = await axios.post(link, {
+      username: username,
+      password: password,
+    });
+    console.log(data);
+    axios.defaults.headers["x-csrf-token"] =
+      data.data.token;
     return data;
   }
 );
