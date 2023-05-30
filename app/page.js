@@ -7,10 +7,10 @@ export default function Home() {
   const contentStyle = {
     margin: 0,
     height: "160px",
-    color: "#fff",
+    color: "black",
     lineHeight: "160px",
     textAlign: "center",
-    background: "#364d79",
+    background: "#E5FFFE",
   };
   return (
     <div className={styles.homeDiv}>
@@ -260,7 +260,12 @@ export default function Home() {
             >
               <Carousel>
                 <div>
-                  <h3 style={contentStyle}>1</h3>
+                  <h3 style={contentStyle}>
+                    From its medieval origins to the digital
+                    era, learn everything there is to know
+                    about the ubiquitous lorem ipsum
+                    passage.
+                  </h3>
                 </div>
                 <div>
                   <h3 style={contentStyle}>2</h3>

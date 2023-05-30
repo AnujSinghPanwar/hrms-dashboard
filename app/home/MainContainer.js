@@ -1,7 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Btn from "../components/Btn";
-import { Button, Col, Layout, Menu, Row } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  Dropdown,
+  Layout,
+  Menu,
+  Row,
+  Space,
+} from "antd";
 import moment from "moment";
 import "../globals.css";
 import { useRouter } from "next/navigation";
@@ -10,6 +19,10 @@ import {
   RiMenuFoldLine,
   RiMenuUnfoldLine,
 } from "react-icons/ri";
+import {
+  UserOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 
 import {
   MdOutlineSpaceDashboard,
@@ -193,6 +206,21 @@ export default function Main({ children }) {
     router.push("./login");
   };
 
+  const items = [
+    {
+      label: "Logout",
+      key: "1",
+      onClick: handleLogout,
+    },
+    // {
+    //   label: "2nd menu item",
+    //   key: "2",
+    // },
+    // {
+    //   label: "3rd menu item",
+    //   key: "3",
+    // },
+  ];
   useEffect(() => {
     // if (typeof window !== "undefined") {
     if (token) {
@@ -235,7 +263,24 @@ export default function Main({ children }) {
           </div>
           <div className="secondDiv">
             {moment().format("DD MMM YYYY,ddd")}
-            <img
+            <Dropdown
+              menu={{
+                items,
+                // onClick,
+              }}
+            >
+              <a onClick={(e) => e.preventDefault()}>
+                <Space style={{ marginLeft: "10px" }}>
+                  <Avatar icon={<UserOutlined />} />
+                  <span>ANUJ </span>
+                  <DownOutlined color="black" />
+                </Space>
+              </a>
+            </Dropdown>
+            {/* <Space direction="vertical" size={16}>
+              <Avatar icon={<UserOutlined />} />
+            </Space> */}
+            {/* <img
               src="./user.png"
               style={{
                 width: "30px",
@@ -248,7 +293,7 @@ export default function Main({ children }) {
               onClick={handleLogout}
             >
               Logout
-            </h5>
+            </h5> */}
           </div>
         </Header>
       )}
