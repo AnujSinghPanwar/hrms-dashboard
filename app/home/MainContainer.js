@@ -22,6 +22,7 @@ import {
 import {
   UserOutlined,
   DownOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 
 import {
@@ -262,7 +263,10 @@ export default function Main({ children }) {
             </div>
           </div>
           <div className="secondDiv">
-            {moment().format("DD MMM YYYY,ddd")}
+            <CalendarOutlined
+              style={{ marginRight: "5px" }}
+            />
+            {moment().format("DD MMM YYYY, ddd")}
             <Dropdown
               menu={{
                 items,
@@ -270,7 +274,7 @@ export default function Main({ children }) {
               }}
             >
               <a onClick={(e) => e.preventDefault()}>
-                <Space style={{ marginLeft: "10px" }}>
+                <Space style={{ marginLeft: "20px" }}>
                   <Avatar icon={<UserOutlined />} />
                   <span>ANUJ </span>
                   <DownOutlined color="black" />
