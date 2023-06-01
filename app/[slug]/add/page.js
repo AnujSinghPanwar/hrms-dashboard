@@ -8,6 +8,7 @@ import { InboxOutlined } from "@ant-design/icons";
 
 import { mainLink } from "../../redux/axiosLink";
 import SingleDatePicker from "yes/app/components/SingleDatePicker";
+import { toast } from "react-toastify";
 
 const { Dragger } = Upload;
 
@@ -24,7 +25,7 @@ export default function page() {
     aadhar: "",
   });
 
-  console.log(empData, selectDate);
+  // console.log(empData, selectDate);
 
   const props = {
     name: "file",
@@ -70,19 +71,54 @@ export default function page() {
   };
 
   const saveEmployee = async () => {
-    const { data } = await mainLink.post(
-      "/hrms/v2/addEmp",
-      {
-        mobile: empData?.mob,
-        f_name: empData?.fName,
-        l_name: empData?.lName,
-        dob: selectDate,
-        payroll: empData?.staff,
-        aadhaar: empData?.aadhar,
-        gender: empData?.gender,
+    if (!empData.fName) {
+      toast.error("Please fill name");
+    } else if (!empData.lName) {
+      toast.error("Please fill last name");
+    } else if (!selectDate) {
+      toast.error("dob must be");
+    } else if (!empData.mob) {
+      toast.error("contact must be fill");
+    } else if (!empData.staff) {
+      toast.error("please fill staff type");
+    } else if (!empData.gender) {
+      toast.error("gender must be select");
+    } else if (!empData.aadhar) {
+      toast.error("please add aadhar number...");
+    } else {
+      const { data } = await mainLink.post(
+        "/hrms/v2/addEmp",
+        {
+          mobile: empData?.mob,
+          f_name: empData?.fName,
+          l_name: empData?.lName,
+          dob: selectDate,
+          payroll: empData?.staff,
+          aadhaar: empData?.aadhar,
+          gender: empData?.gender,
+        }
+      );
+      console.log(data);
+      if (data.code == 200) {
+        resetFunction();
+        toast.success(data.message);
+      } else if (data.code == 500) {
+        console.log(data.message.msg);
+        toast.error(data.message.msg);
       }
-    );
-    console.log(data);
+    }
+  };
+
+  const resetFunction = () => {
+    // console.log("first");
+    setEmpData({
+      fName: "",
+      lName: "",
+      mob: "",
+      staff: "",
+      gender: "",
+    });
+    setSelectDate("");
   };
 
   useEffect(() => {
@@ -277,6 +313,7 @@ export default function page() {
                     color: "#FF3333",
                     fontWeight: "500",
                   }}
+                  onClick={resetFunction}
                   title="Reset"
                 />
                 <Btn

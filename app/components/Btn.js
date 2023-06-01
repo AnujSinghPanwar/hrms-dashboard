@@ -11,6 +11,7 @@ export default function Btn({
   size,
   style,
   onClick,
+  disabled,
 }) {
   return (
     <>
@@ -22,6 +23,7 @@ export default function Btn({
         icon={icon}
         style={style}
         onClick={onClick}
+        disabled={disabled}
       >
         {title}
       </Button>
