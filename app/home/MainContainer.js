@@ -137,8 +137,7 @@ export default function Main({ children }) {
         {
           label: "Employee Status",
           key: "empstatus",
-          disabled: true,
-          onClick: () => router.push("/Dashboard/status"),
+          onClick: () => router.push("/emp/status"),
         },
         {
           label: "Employee View",
