@@ -8,6 +8,7 @@ export default function MySelect({
   onSearch,
   defaultValue,
   onChange,
+  value,
 }) {
   return (
     <div>
@@ -19,6 +20,7 @@ export default function MySelect({
         onChange={onChange}
         onSearch={onSearch}
         defaultValue={defaultValue}
+        value={value}
       />
     </div>
   );

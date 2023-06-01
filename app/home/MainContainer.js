@@ -36,16 +36,15 @@ import { BsCashStack } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 // import { logoutUser } from "yes/redux/loginSlice";
 import { toast } from "react-toastify";
-import { logoutUser } from "../redux/loginSlice";
+import { logout } from "../redux/loginSlice";
 
 // Destructor
 const { Header, Sider, Content } = Layout;
 
 export default function Main({ children }) {
   const router = useRouter();
-  const { token, msg } = useSelector(
-    (state) => state.login
-  );
+  const { user } = useSelector((state) => state.login);
+  // console.log(user?.token);
   const dispatch = useDispatch();
   const [collapse, setCollapse] = useState(false);
 
@@ -113,7 +112,7 @@ export default function Main({ children }) {
         {
           label: "Employees",
           key: "employees",
-          disabled: true,
+          // disabled: true,
           onClick: () =>
             router.push("/Dashboard/employees"),
         },
@@ -145,7 +144,7 @@ export default function Main({ children }) {
         {
           label: "Employee View",
           key: "empview",
-          disabled: true,
+          // disabled: true,
           onClick: () => router.push("/employee/view"),
         },
       ],
@@ -203,7 +202,7 @@ export default function Main({ children }) {
   ];
 
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(logout());
     router.push("./login");
   };
 
@@ -213,28 +212,20 @@ export default function Main({ children }) {
       key: "1",
       onClick: handleLogout,
     },
-    // {
-    //   label: "2nd menu item",
-    //   key: "2",
-    // },
-    // {
-    //   label: "3rd menu item",
-    //   key: "3",
-    // },
   ];
   useEffect(() => {
     // if (typeof window !== "undefined") {
-    if (token) {
+    if (user?.token) {
       router.push("/");
-      toast.success(msg);
+      // toast.success(msg);
     } else {
       router.push("/login");
     }
     // }
-  }, [token]);
+  }, [user?.token]);
   return (
     <Layout className="container">
-      {token && (
+      {user?.token && (
         <Header
           className="header"
           style={{
@@ -275,34 +266,34 @@ export default function Main({ children }) {
             >
               <a onClick={(e) => e.preventDefault()}>
                 <Space style={{ marginLeft: "20px" }}>
-                  <Avatar icon={<UserOutlined />} />
+                  {/* <Avatar icon={<user.tokenOutlined />} /> */}
                   <span>ANUJ </span>
                   <DownOutlined color="black" />
                 </Space>
               </a>
             </Dropdown>
             {/* <Space direction="vertical" size={16}>
-              <Avatar icon={<UserOutlined />} />
-            </Space> */}
+         <Avatar icon={<UserOutlined />} />
+       </Space> */}
             {/* <img
-              src="./user.png"
-              style={{
-                width: "30px",
-                marginLeft: "10px",
-                cursor: "pointer",
-              }}
-            />
-            <h5
-              style={{ cursor: "pointer" }}
-              onClick={handleLogout}
-            >
-              Logout
-            </h5> */}
+         src="./user.png"
+         style={{
+           width: "30px",
+           marginLeft: "10px",
+           cursor: "pointer",
+         }}
+       />
+       <h5
+         style={{ cursor: "pointer" }}
+         onClick={handleLogout}
+       >
+         Logout
+       </h5> */}
           </div>
         </Header>
       )}
       <Layout>
-        {token && (
+        {user?.token && (
           <Sider collapsed={collapse} theme="light">
             <Menu mode="inline" items={link} />
           </Sider>

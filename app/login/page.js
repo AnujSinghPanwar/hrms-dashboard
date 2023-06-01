@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Input, Button } from "antd";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
@@ -7,24 +7,50 @@ import { UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
 import { toast } from "react-toastify";
-import { signInUser } from "../redux/loginSlice";
-import { useDispatch } from "react-redux";
+import {
+  signInAuth,
+  signInUser,
+} from "../redux/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function page() {
   const router = useRouter();
   const dispatch = useDispatch();
-  //   const { msg } = useSelector((state) => state.user);
+  const { user, msg } = useSelector((state) => state.login);
+  console.log(msg);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [inpVal, setInpVal] = useState({
+    username: "",
+    password: "",
+  });
+
+  const inputHandler = (name, value) => {
+    setInpVal(() => {
+      return {
+        ...inpVal,
+        [name]: value,
+      };
+    });
+  };
 
   const handleFunction = () => {
-    dispatch(signInUser({ username, password }));
+    const { username, password } = inpVal;
+    dispatch(signInAuth({ username, password }));
+
+    // console.log("first");
     // toast.error(msg);
   };
-  // const logout = () => {
-  //   dispatch(logoutUser());
-  // };
+  const logout = () => {
+    dispatch(logoutUser());
+  };
+  useEffect(() => {
+    if (user) {
+      toast.success(msg);
+      router.push("/");
+    } else {
+      router.push("/login");
+    }
+  }, [user]);
 
   return (
     <div className={styles.loginDiv}>
@@ -99,9 +125,9 @@ export default function page() {
                 <Input
                   placeholder="Email id"
                   style={{ marginTop: "20px" }}
-                  value={username}
+                  value={inpVal.username}
                   onChange={(e) =>
-                    setUsername(e.target.value)
+                    inputHandler("username", e.target.value)
                   }
                   suffix={<UserOutlined />}
                   size="large"
@@ -109,9 +135,9 @@ export default function page() {
                 <Input.Password
                   placeholder="Password"
                   size="large"
-                  value={password}
+                  value={inpVal.password}
                   onChange={(e) =>
-                    setPassword(e.target.value)
+                    inputHandler("password", e.target.value)
                   }
                   style={{
                     marginTop: "5px",

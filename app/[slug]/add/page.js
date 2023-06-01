@@ -1,23 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import {
-  Col,
-  DatePicker,
-  Input,
-  Row,
-  Segmented,
-  Upload,
-} from "antd";
+import { Col, Input, Row, Upload } from "antd";
 import MySelect from "yes/app/components/MySelect";
 import Btn from "yes/app/components/Btn";
 import { InboxOutlined } from "@ant-design/icons";
+
+import { mainLink } from "../../redux/axiosLink";
+import SingleDatePicker from "yes/app/components/SingleDatePicker";
 
 const { Dragger } = Upload;
 
 export default function page() {
   const [value, setValue] = useState(1);
-  console.log(value);
+  const [staffopt, setStaffopt] = useState([]);
+  const [selectDate, setSelectDate] = useState("");
+  const [empData, setEmpData] = useState({
+    fName: "",
+    lName: "",
+    mob: "",
+    staff: "",
+    gender: "",
+    aadhar: "",
+  });
+
+  console.log(empData, selectDate);
 
   const props = {
     name: "file",
@@ -44,11 +51,43 @@ export default function page() {
     },
   };
 
-  const optValue = [{ label: "MS-Staff", value: "staff" }];
   const optGender = [
-    { label: "Male", value: "male" },
-    { label: "Female", value: "female" },
+    { label: "Male", value: "M" },
+    { label: "Female", value: "F" },
+    { label: "Transgender", value: "T" },
+    { label: "Other", value: "O" },
   ];
+
+  const getPayroll = async () => {
+    const { data } = await mainLink.post(
+      "/hrms/fetch_contractor"
+    );
+    const a = [];
+    data.map((ad) =>
+      a.push({ label: ad.text, value: ad.id })
+    );
+    setStaffopt(a);
+  };
+
+  const saveEmployee = async () => {
+    const { data } = await mainLink.post(
+      "/hrms/v2/addEmp",
+      {
+        mobile: empData?.mob,
+        f_name: empData?.fName,
+        l_name: empData?.lName,
+        dob: selectDate,
+        payroll: empData?.staff,
+        aadhaar: empData?.aadhar,
+        gender: empData?.gender,
+      }
+    );
+    console.log(data);
+  };
+
+  useEffect(() => {
+    getPayroll();
+  }, []);
   return (
     <div className={styles.mainDiv}>
       <Row>
@@ -132,6 +171,15 @@ export default function page() {
               <Input
                 placeholder="Name"
                 style={{ width: "100%" }}
+                value={empData?.fName}
+                onChange={(e) =>
+                  setEmpData((empData) => {
+                    return {
+                      ...empData,
+                      fName: e.target.value,
+                    };
+                  })
+                }
               />
             </Col>
             <Col span={4}>
@@ -139,29 +187,64 @@ export default function page() {
               <Input
                 placeholder="Last name"
                 style={{ width: "100%" }}
+                value={empData?.lName}
+                onChange={(e) =>
+                  setEmpData((empData) => {
+                    return {
+                      ...empData,
+                      lName: e.target.value,
+                    };
+                  })
+                }
               />
             </Col>
             <Col span={4}>
               <span>Date of birth</span>
-              <DatePicker style={{ width: "100%" }} />
+              <SingleDatePicker setDate={setSelectDate} />
             </Col>
             <Col span={4}>
               <span>Mobile No</span>
               <Input
                 style={{ width: "100%" }}
                 placeholder="Mobile no"
+                value={empData?.mob}
+                onChange={(e) =>
+                  setEmpData((empData) => {
+                    return {
+                      ...empData,
+                      mob: e.target.value,
+                    };
+                  })
+                }
               />
             </Col>
             <Col span={4}>
               <MySelect
+                placeholder="Payroll Type Select"
+                options={staffopt}
                 label="Payroll"
-                options={optValue}
+                value={empData?.staff}
+                onChange={(e) =>
+                  setEmpData((empData) => {
+                    return { ...empData, staff: e };
+                  })
+                }
               />
             </Col>
             <Col span={4}>
               <MySelect
+                placeholder="Select Gender"
                 label="Gender"
                 options={optGender}
+                value={empData?.gender}
+                onChange={(e) =>
+                  setEmpData((empData) => {
+                    return {
+                      ...empData,
+                      gender: e,
+                    };
+                  })
+                }
               />
             </Col>
 
@@ -170,6 +253,15 @@ export default function page() {
               <Input
                 style={{ width: "100%" }}
                 placeholder="32145698745"
+                value={empData?.aadhar}
+                onChange={(e) =>
+                  setEmpData((empData) => {
+                    return {
+                      ...empData,
+                      aadhar: e.target.value,
+                    };
+                  })
+                }
               />
             </Col>
             <Col span={24} style={{ marginTop: "20px" }}>
@@ -188,6 +280,7 @@ export default function page() {
                   title="Reset"
                 />
                 <Btn
+                  onClick={saveEmployee}
                   style={{
                     backgroundColor: "#04B0A8",
                     color: "white",
