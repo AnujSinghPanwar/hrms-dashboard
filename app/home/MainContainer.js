@@ -119,8 +119,7 @@ export default function Main({ children }) {
         {
           label: "Separate",
           key: "separate",
-          disabled: true,
-          onClick: () => router.push("/Dashboard/separate"),
+          onClick: () => router.push("/emp/separate"),
         },
         {
           label: "Add",
